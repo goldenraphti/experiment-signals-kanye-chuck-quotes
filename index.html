@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="js/script.js" type="module" defer></script>
+  </head>
+  <body>
+    <main>
+      <h1>Signals experimentation</h1>
+      <section>
+        <h2>Generate new quotes</h2>
+        <button id="fetch-quote">
+          <span>Fetch a new quote</span>
+          <img
+            src="images/kanye-face.png"
+            alt="kanye west dumb face"
+            width="35"
+            height="35"
+          />
+        </button>
+        <output id="output-fetched-quote"></output>
+        <button id="save-quote">
+          <span>Save quote</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            width="16"
+            height="16"
+            color="currentColor"
+          >
+            <defs>
+              <style>
+                .cls-637a50fc15c575900940066c-1 {
+                  fill: none;
+                  stroke: currentColor;
+                  stroke-miterlimit: 10;
+                }
+              </style>
+            </defs>
+            <path
+              class="cls-637a50fc15c575900940066c-1"
+              d="M22.5,22.5H1.5V1.5H18.68L22.5,5.32Z"
+            ></path>
+            <path
+              class="cls-637a50fc15c575900940066c-1"
+              d="M7.23,1.5h9.55a0,0,0,0,1,0,0V6.27a1,1,0,0,1-1,1H8.18a1,1,0,0,1-1-1V1.5A0,0,0,0,1,7.23,1.5Z"
+            ></path>
+            <rect
+              class="cls-637a50fc15c575900940066c-1"
+              x="6.27"
+              y="14.86"
+              width="11.45"
+              height="7.64"
+            ></rect>
+            <line
+              class="cls-637a50fc15c575900940066c-1"
+              x1="9.14"
+              y1="18.68"
+              x2="14.86"
+              y2="18.68"
+            ></line>
+          </svg>
+        </button>
+      </section>
+      <section>
+        <h2>Saved quotes</h2>
+        <ul id="saved-quotes-list"></ul>
+      </section>
+    </main>
+  </body>
+</html>

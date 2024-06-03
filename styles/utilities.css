@@ -1,0 +1,44 @@
+
+
+	/* Utility-classes */
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+	.text-align-center {
+		text-align: center;
+	}
+
+	.serif {
+		font-family: var(--serif-font);
+	}
+
+	.mono {
+		font-family: var(--monospace-font);
+		font-weight: 200;
+		font-size: 0.8em;
+	}
+
+	.strong {
+		font-weight: 500;
+	}
+
+	.italic {
+		font-style: italic;
+	}
+
+	.primary-color {
+		color: var(--primary-1);
+	}
+
+	.big-2 {
+		font-size: 2em;
+	}
