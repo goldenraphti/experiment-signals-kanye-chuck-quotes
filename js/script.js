@@ -1,6 +1,15 @@
-//  listen to mouse-down event from button fetch-quote
-// fetch quote from api "https://api.kanye.rest/"
-// display quote in div with id="output-fetched-quote"
+import { Signal } from "./signal-polyfill.js";
+import { effect } from "./signal-effect.js";
+
+const apiUrl = "https://api.kanye.rest/";
+
+const domPointQuotesList = document.getElementById("saved-quotes-list");
+
+const newFetchedQuote = new Signal.State("");
+const listQuotesSaved = new Signal.State([]);
+const amountQuotesSaved = new Signal.Computed(
+  () => listQuotesSaved.get().length
+);
 
 async function listenToFetchBtn() {
   document
@@ -10,35 +19,29 @@ async function listenToFetchBtn() {
       console.log("🌻", fetchedQuote);
       fetchedQuote === null
         ? console.log("ooopsies, null")
-        : displayNewlyFecthedQuote(fetchedQuote);
+        : newFetchedQuote.set(fetchedQuote);
     });
 }
-
-const apiUrl = "https://api.kanye.rest/";
 
 async function fetchNewQuote() {
   const response = await fetch(apiUrl);
   const newQuote = await response.json();
-  console.log("🍉", newQuote?.quote);
   return newQuote?.quote;
 }
 
-function displayNewlyFecthedQuote(quoteToDisplay) {
-  document.getElementById("output-fetched-quote").textContent = quoteToDisplay;
-}
+// effect to display new quotes when fetched
+effect(
+  () =>
+    (document.getElementById("output-fetched-quote").textContent =
+      newFetchedQuote.get())
+);
 
-let listQuotesSaved = [];
+// effect to display new saved quotes to list
 
-function saveQuote(quoteToSave) {
-  console.log("🎁", quoteToSave, listQuotesSaved);
-  listQuotesSaved.push(quoteToSave);
-}
-
-function stagedQuote() {
-  return document.getElementById("output-fetched-quote").textContent ?? null;
-}
-
-const domPointQuotesList = document.getElementById("saved-quotes-list");
+effect(() => {
+  updateListQuotesInDOM(listQuotesSaved.get());
+  updateQuotesSavedAmount(amountQuotesSaved.get());
+});
 
 function updateListQuotesInDOM(quotesToDisplay) {
   console.log("🚀", quotesToDisplay);
@@ -48,21 +51,23 @@ function updateListQuotesInDOM(quotesToDisplay) {
     const quoteElementToAppend = document.createElement("li");
     const quoteTextContent = document.createTextNode(quote);
     quoteElementToAppend.appendChild(quoteTextContent);
-    console.log("🚀🚀", quoteElementToAppend);
     domPointQuotesList.append(quoteElementToAppend);
   });
 }
 
+function updateQuotesSavedAmount(amountQuotesSaved) {
+  amountQuotesSaved === 0
+    ? (document.getElementById("amount-quotes-saved").textContent = "")
+    : (document.getElementById(
+        "amount-quotes-saved"
+      ).textContent = ` (${amountQuotesSaved})`);
+}
+
 const listenToBtnSaveQuote = () => {
   document.getElementById("save-quote").addEventListener("mousedown", (e) => {
-    saveQuote(stagedQuote());
-    updateListQuotesInDOM(listQuotesSaved);
+    listQuotesSaved.set([...listQuotesSaved.get(), newFetchedQuote.get()]);
   });
 };
 
 listenToFetchBtn();
 listenToBtnSaveQuote();
-
-// listen to mouse-down event from button save-quote
-// save quote in local storage
-// display quote in div with id="output-saved-quote"
